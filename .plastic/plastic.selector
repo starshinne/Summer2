@@ -1,0 +1,4 @@
+repository "Neon  Shooting@starshinne@cloud.cn"
+  path "/"
+    br "/main"
+    co "/main"
