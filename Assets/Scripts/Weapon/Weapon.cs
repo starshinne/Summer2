@@ -40,7 +40,7 @@ public class Weapon : MonoBehaviour
                 lineRenderer.SetPosition(1, FirePoint.position);
                 isLaser = false;
             }
-            
+
         }
     }
 
@@ -56,6 +56,7 @@ public class Weapon : MonoBehaviour
 
     private void Shoot(InputAction.CallbackContext context)
     {
+        FindObjectOfType<AudioManager>().Play("GunShot");
         if (spriteRenderer_pistol.flipX == false)
         {
             Instantiate(BulletPrefab_W, FirePoint.position, FirePoint.rotation).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * speed * Time.deltaTime; ;
@@ -70,6 +71,7 @@ public class Weapon : MonoBehaviour
     private void GetGunColor(InputAction.CallbackContext context)
     {
         isLaser = true;
+        FindObjectOfType<AudioManager>().Play("Laser");
         if (spriteRenderer_pistol.flipX == false)
         {
             RaycastHit2D hitInfo = Physics2D.Raycast(FirePoint.position, Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position), 500, 7);
