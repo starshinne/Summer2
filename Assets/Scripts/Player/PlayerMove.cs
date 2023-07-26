@@ -17,6 +17,8 @@ public class PlayerMove : MonoBehaviour
     public Vector2 InputDirec;
     public PhysicsCheck physicsCheck;
     public SpriteRenderer spriteRenderer_Weapon;
+    public Drink drink;
+    public bool isDoubleJump = false;
     public float DiffBtwMouseandPlayer;
     public bool FacingRight = true;
 
@@ -25,6 +27,7 @@ public class PlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         input = new InputNeon();
         input.Player.Jump.started += Jump;
+        drink.GetComponent<Drink>();
     }
 
 
@@ -48,7 +51,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void Move()
-    {   
+    {
         rb.velocity = new Vector2(InputDirec.x * speed * Time.deltaTime, rb.velocity.y);
     }
     private void Jump(InputAction.CallbackContext context)
@@ -56,6 +59,14 @@ public class PlayerMove : MonoBehaviour
         if (physicsCheck.isGround)
         {
             rb.AddForce(transform.up * JumpForce, ForceMode2D.Impulse);
+        }
+        if (drink.isDoubleJump == true)
+        {
+            if (!physicsCheck.isGround && isDoubleJump == false)
+            {
+                rb.AddForce(transform.up * JumpForce, ForceMode2D.Impulse);
+                isDoubleJump = true;
+            }
         }
     }
     private void Flip()
