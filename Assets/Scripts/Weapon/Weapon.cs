@@ -15,6 +15,7 @@ public class Weapon : MonoBehaviour
     public Rigidbody2D Bullet;
     public LineRenderer lineRenderer;
     public BulletEffects bulletEffects;
+    public PlayerData playerData;
     public float LaserCounter;
     private float StoreCounter;
     public float speed;
@@ -27,6 +28,7 @@ public class Weapon : MonoBehaviour
         WeaponInput.Player.Fire.started += Shoot;
         WeaponInput.Player.GetColor.started += GetGunColor;
         Bullet.GetComponent<Rigidbody2D>();
+        playerData.GetComponent<PlayerData>();
         StoreCounter = LaserCounter;
     }
     private void Update()
@@ -56,77 +58,83 @@ public class Weapon : MonoBehaviour
 
     private void Shoot(InputAction.CallbackContext context)
     {
-        FindObjectOfType<AudioManager>().Play("GunShot");
-        if (spriteRenderer_pistol.flipX == false)
+        if (!playerData.isDead)
         {
-            Instantiate(BulletPrefab_W, FirePoint.position, FirePoint.rotation).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * speed * Time.deltaTime; ;
-        }
-        if (spriteRenderer_pistol.flipX == true)
-        {
-            Instantiate(BulletPrefab_W, FirePoint2.position, Quaternion.Inverse(FirePoint2.rotation)).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * speed * Time.deltaTime; ;
+            FindObjectOfType<AudioManager>().Play("GunShot");
+            if (spriteRenderer_pistol.flipX == false)
+            {
+                Instantiate(BulletPrefab_W, FirePoint.position, FirePoint.rotation).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * speed * Time.deltaTime; ;
+            }
+            if (spriteRenderer_pistol.flipX == true)
+            {
+                Instantiate(BulletPrefab_W, FirePoint2.position, Quaternion.Inverse(FirePoint2.rotation)).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * speed * Time.deltaTime; ;
+
+            }
 
         }
-
     }
     private void GetGunColor(InputAction.CallbackContext context)
     {
-        isLaser = true;
-        FindObjectOfType<AudioManager>().Play("Laser");
-        if (spriteRenderer_pistol.flipX == false)
+        if (!playerData.isDead)
         {
-            RaycastHit2D hitInfo = Physics2D.Raycast(FirePoint.position, Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position), 500, 7);
-            if (hitInfo)
+            isLaser = true;
+            FindObjectOfType<AudioManager>().Play("Laser");
+            if (spriteRenderer_pistol.flipX == false)
             {
-                lineRenderer.SetPosition(0, FirePoint.position);
-                lineRenderer.SetPosition(1, hitInfo.point);
-                LaserCounter = StoreCounter;
-                if (hitInfo.transform.name == "Magnenta")
+                RaycastHit2D hitInfo = Physics2D.Raycast(FirePoint.position, Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position), 500, 7);
+                if (hitInfo)
                 {
-                    state = 1;
-                }
-                else if (hitInfo.transform.name == "Green")
-                {
-                    state = 2;
-                }
-                else if (hitInfo.transform.name == "Yellow")
-                {
-                    state = 3;
-                }
-                else if (hitInfo.transform.name == "Cyan")
-                {
-                    state = 4;
-                }
+                    lineRenderer.SetPosition(0, FirePoint.position);
+                    lineRenderer.SetPosition(1, hitInfo.point);
+                    LaserCounter = StoreCounter;
+                    if (hitInfo.transform.name == "Magnenta")
+                    {
+                        state = 1;
+                    }
+                    else if (hitInfo.transform.name == "Green")
+                    {
+                        state = 2;
+                    }
+                    else if (hitInfo.transform.name == "Yellow")
+                    {
+                        state = 3;
+                    }
+                    else if (hitInfo.transform.name == "Cyan")
+                    {
+                        state = 4;
+                    }
 
+                }
             }
-        }
-        if (spriteRenderer_pistol.flipX == true)
-        {
-            RaycastHit2D hitInfo = Physics2D.Raycast(FirePoint2.position, Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position), 500, 7);
-            if (hitInfo)
+            if (spriteRenderer_pistol.flipX == true)
             {
-                lineRenderer.SetPosition(0, FirePoint2.position);
-                lineRenderer.SetPosition(1, hitInfo.point);
-                LaserCounter = StoreCounter;
-                if (hitInfo.transform.name == "Magnenta")
+                RaycastHit2D hitInfo = Physics2D.Raycast(FirePoint2.position, Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position), 500, 7);
+                if (hitInfo)
                 {
-                    state = 1;
-                }
-                else if (hitInfo.transform.name == "Green")
-                {
-                    state = 2;
-                }
-                else if (hitInfo.transform.name == "Yellow")
-                {
-                    state = 3;
-                }
-                else if (hitInfo.transform.name == "Cyan")
-                {
-                    state = 4;
-                }
+                    lineRenderer.SetPosition(0, FirePoint2.position);
+                    lineRenderer.SetPosition(1, hitInfo.point);
+                    LaserCounter = StoreCounter;
+                    if (hitInfo.transform.name == "Magnenta")
+                    {
+                        state = 1;
+                    }
+                    else if (hitInfo.transform.name == "Green")
+                    {
+                        state = 2;
+                    }
+                    else if (hitInfo.transform.name == "Yellow")
+                    {
+                        state = 3;
+                    }
+                    else if (hitInfo.transform.name == "Cyan")
+                    {
+                        state = 4;
+                    }
 
 
+                }
             }
-        }
 
+        }
     }
 }

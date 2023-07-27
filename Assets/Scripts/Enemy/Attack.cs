@@ -11,7 +11,7 @@ public class Attack : MonoBehaviour
     public float attackFreq;
 
     public float attackRange;
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         other.GetComponent<PlayerData>()?.TakeDamage(this);
     }

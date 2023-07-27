@@ -765,7 +765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &264075278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3617,7 +3617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155306659}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 209.9, y: 21.9, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7.7483, y: 7.7584, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3680,6 +3680,7 @@ MonoBehaviour:
   Bullet: {fileID: 3141153638644019076}
   lineRenderer: {fileID: 1311958073}
   bulletEffects: {fileID: 8560752653673492935, guid: 819c86537139b26479a647e635260ddd, type: 3}
+  playerData: {fileID: 1155306669}
   LaserCounter: 0.1
   speed: 8000
   isLaser: 0

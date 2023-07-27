@@ -19,15 +19,15 @@ public class Boundary : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ColorBorn_RG = new Vector3(rb_Player.position.x - 21f, rb_Player.position.y + 12f, 0f);
-        ColorBorn_B = new Vector3(rb_Player.position.x + 21f, rb_Player.position.y + 12f, 0f);
+        ColorBorn_RG = new Vector3(rb_Player.position.x - 20f, rb_Player.position.y + 12f, 0f);
+        ColorBorn_B = new Vector3(rb_Player.position.x + 20f, rb_Player.position.y + 12f, 0f);
         if (transform.tag == "Left")
         {
-            transform.position = new Vector3(rb_Player.position.x - 21f, transform.position.y, 0);
+            transform.position = new Vector3(rb_Player.position.x - 20f, transform.position.y, 0);
         }
         if (transform.tag == "Right")
         {
-            transform.position = new Vector3(rb_Player.position.x + 21f, transform.position.y, 0);
+            transform.position = new Vector3(rb_Player.position.x + 20f, transform.position.y, 0);
         }
         rb.velocity = new Vector2(rb.velocity.x, -5f);
         ColorRoll();
