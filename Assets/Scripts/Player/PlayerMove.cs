@@ -12,33 +12,56 @@ public class PlayerMove : MonoBehaviour
     public float JumpForce;
     public float hitForce;
     public bool isHit = false;
+    private bool isRush;
+    public float RushTimeCounter;
+    public float coolTime;
     public Rigidbody2D rb;
+    public bool RushAble;
     public InputNeon input;
     public Vector2 InputDirec;
     public PhysicsCheck physicsCheck;
     public SpriteRenderer spriteRenderer_Weapon;
     public Drink drink;
+    public Animator animator;
     public bool isDoubleJump = false;
     public float DiffBtwMouseandPlayer;
     public bool FacingRight = true;
+    private int FacDir;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         input = new InputNeon();
+        coolTime = -1;
         input.Player.Jump.started += Jump;
+        input.Player.Rush.started += Rush;
         drink.GetComponent<Drink>();
+        animator.GetComponent<Animator>();
     }
+
 
 
     private void FixedUpdate()
     {
         InputDirec = input.Player.Move.ReadValue<Vector2>();
-        if (!isHit)
+        if (!isHit && !isRush)
         {
             Move();
             Flip();
             CheckDiff();
+        }
+    }
+    private void Update()
+    {
+        if (coolTime >= 0)
+        {
+            RushTimeCounter -= Time.deltaTime;
+            coolTime -= Time.deltaTime;
+        }
+        if (RushTimeCounter < 0)
+        {
+            isRush = false;
+            rb.gravityScale = 1;
         }
     }
     private void OnEnable()
@@ -53,6 +76,32 @@ public class PlayerMove : MonoBehaviour
     private void Move()
     {
         rb.velocity = new Vector2(InputDirec.x * speed * Time.deltaTime, rb.velocity.y);
+    }
+    private void Rush(InputAction.CallbackContext context)
+    {
+        if (RushAble)
+        {   
+            if (FacingRight == true)
+            {
+                FacDir = 1;
+            }
+            if (FacingRight == false)
+            {
+                FacDir = -1;
+            }
+            if (coolTime < 0)
+            {
+                RushTimeCounter = 0.6f;
+                if (RushTimeCounter >= 0)
+                {
+                    rb.gravityScale = 0;
+                    rb.velocity = new Vector2(FacDir * 12f, 0f);
+                    animator.SetTrigger("isRush");
+                }
+                coolTime = 1f;
+                isRush = true;
+            }
+        }
     }
     private void Jump(InputAction.CallbackContext context)
     {

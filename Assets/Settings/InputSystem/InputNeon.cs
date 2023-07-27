@@ -71,6 +71,15 @@ public partial class @InputNeon: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rush"",
+                    ""type"": ""Button"",
+                    ""id"": ""038c7b1a-746e-4172-a8b4-3253529a8a72"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -313,6 +322,17 @@ public partial class @InputNeon: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""GetColor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99bccf7a-b22a-4c9d-8dc7-f9f53390e014"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rush"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -905,6 +925,7 @@ public partial class @InputNeon: IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_GetColor = m_Player.FindAction("GetColor", throwIfNotFound: true);
+        m_Player_Rush = m_Player.FindAction("Rush", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -983,6 +1004,7 @@ public partial class @InputNeon: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_GetColor;
+    private readonly InputAction m_Player_Rush;
     public struct PlayerActions
     {
         private @InputNeon m_Wrapper;
@@ -992,6 +1014,7 @@ public partial class @InputNeon: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @GetColor => m_Wrapper.m_Player_GetColor;
+        public InputAction @Rush => m_Wrapper.m_Player_Rush;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1016,6 +1039,9 @@ public partial class @InputNeon: IInputActionCollection2, IDisposable
             @GetColor.started += instance.OnGetColor;
             @GetColor.performed += instance.OnGetColor;
             @GetColor.canceled += instance.OnGetColor;
+            @Rush.started += instance.OnRush;
+            @Rush.performed += instance.OnRush;
+            @Rush.canceled += instance.OnRush;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1035,6 +1061,9 @@ public partial class @InputNeon: IInputActionCollection2, IDisposable
             @GetColor.started -= instance.OnGetColor;
             @GetColor.performed -= instance.OnGetColor;
             @GetColor.canceled -= instance.OnGetColor;
+            @Rush.started -= instance.OnRush;
+            @Rush.performed -= instance.OnRush;
+            @Rush.canceled -= instance.OnRush;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1222,6 +1251,7 @@ public partial class @InputNeon: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnGetColor(InputAction.CallbackContext context);
+        void OnRush(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
