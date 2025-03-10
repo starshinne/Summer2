@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
     public Rigidbody2D rb;
-    public float speed;
     public GameObject ob_Bullet;
     public GameObject BulletEffect_W;
     public GameObject BulletEffect_M;

@@ -11,11 +11,12 @@ public class EnemyOccur : MonoBehaviour
     public Vector3 BeforePosition;
     public Transform Player;
     public float EveryTime;
+    public float TimeCountertime;
     private void Awake()
     {
+        TimeCountertime = EveryTime;
         Enemy1.GetComponent<GameObject>();
         Player.GetComponent<Transform>();
-        InvokeRepeating("BornEnemy", 5.0f, EveryTime);
     }
     private void Update()
     {
@@ -30,12 +31,23 @@ public class EnemyOccur : MonoBehaviour
             BeforePosition.y = BeforePosition.y + 25;
         }
         RandomPosotion = BeforePosition;
+        TimeCounter();
+        if (TimeCountertime <= 0)
+        {
+            BornEnemy();
+            TimeCountertime = EveryTime;
+        }
     }
 
+    private void TimeCounter()
+    {
+        TimeCountertime -= Time.deltaTime;
+    }
     private void BornEnemy()
-    {   Debug.Log(2);
+    {
         NewEnemy = Instantiate(Enemy1, RandomPosotion, Quaternion.identity);
         NewEnemy.transform.position = RandomPosotion;
+        NewEnemy.GetComponent<EnemyOccur>().enabled = false;
         NewEnemy.GetComponent<Enemy1Data>().state = (int)((Random.value * 100) % 4 + 1);
         NewEnemy.GetComponent<AIPath>().enabled = true;
     }

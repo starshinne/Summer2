@@ -18,7 +18,7 @@ public class Weapon : MonoBehaviour
     public PlayerData playerData;
     public float LaserCounter;
     private float StoreCounter;
-    public float speed;
+    public float BulletSpeed;
     public bool isLaser;
     public int state;
 
@@ -63,11 +63,11 @@ public class Weapon : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("GunShot");
             if (spriteRenderer_pistol.flipX == false)
             {
-                Instantiate(BulletPrefab_W, FirePoint.position, FirePoint.rotation).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * speed * Time.deltaTime; ;
+                Instantiate(BulletPrefab_W, FirePoint.position, FirePoint.rotation).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * BulletSpeed ; 
             }
             if (spriteRenderer_pistol.flipX == true)
             {
-                Instantiate(BulletPrefab_W, FirePoint2.position, Quaternion.Inverse(FirePoint2.rotation)).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * speed * Time.deltaTime; ;
+                Instantiate(BulletPrefab_W, FirePoint2.position, Quaternion.Inverse(FirePoint2.rotation)).GetComponent<Rigidbody2D>().velocity = (Vector2)(Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position)).normalized * BulletSpeed; 
 
             }
 

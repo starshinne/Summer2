@@ -7,9 +7,7 @@ public class Attack : MonoBehaviour
     // Start is called before the first frame update
 [Header("Basic Data")]
     public int Damage;
-
     public float attackFreq;
-
     public float attackRange;
     private void OnTriggerEnter2D(Collider2D other)
     {

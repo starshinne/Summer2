@@ -13,6 +13,7 @@ public class EnemyHit : MonoBehaviour
     private Vector2 BulletFac;
     public Animator animator;
     public AIPath aIPath;
+    public GameObject itself;
 
     private void Awake()
     {
@@ -32,4 +33,8 @@ public class EnemyHit : MonoBehaviour
 
     }
 
+    public void isDead()
+    {
+        Destroy(itself);
+    }
 }

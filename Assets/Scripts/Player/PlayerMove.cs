@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
-    // Start is called before the first frame update
     [Header("Basic Data")]
     public float speed;
     public float JumpForce;
@@ -138,7 +137,7 @@ public class PlayerMove : MonoBehaviour
         DiffBtwMouseandPlayer = Input.mousePosition.x - Camera.main.WorldToScreenPoint(transform.position).x; ;
     }
     public void OnHitPlayer(Transform attacker)
-    {
+    {   
         rb.velocity = Vector2.zero;
         Vector2 hitDir = new Vector2(transform.position.x - attacker.position.x, 0).normalized;
         rb.AddForce(hitDir * hitForce, ForceMode2D.Impulse);

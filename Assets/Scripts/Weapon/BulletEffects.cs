@@ -8,7 +8,6 @@ public class BulletEffects : MonoBehaviour
     public bool isDestroy;
     public GameObject Effect;
     public SpriteRenderer spriteRenderer;
-    public int state;
     private void FixedUpdate()
     {
         if (isDestroy == true)
